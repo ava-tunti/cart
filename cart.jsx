@@ -99,13 +99,25 @@ const Products = (props) => {
   );
   console.log(`Rendering Products ${JSON.stringify(data)}`);
   // Fetch Data
+  // const addToCart = (e) => {
+  //   let name = e.target.name;
+  //   let item = items.filter((item) => item.name == name);
+  //   console.log(`add to Cart ${JSON.stringify(item)}`);
+  //   setCart([...cart, ...item]);
+  //   //doFetch(query);
+  // };
   const addToCart = (e) => {
     let name = e.target.name;
-    let item = items.filter((item) => item.name == name);
-    console.log(`add to Cart ${JSON.stringify(item)}`);
-    setCart([...cart, ...item]);
-    //doFetch(query);
-  };
+    let itemIndex = items.findIndex((item) => item.name === name);
+    let newItem = { ...items[itemIndex] };
+    
+    if (newItem.instock > 0) { // Check if item is in stock
+      newItem.instock -= 1; // Decrease stock
+      setItems([...items.slice(0, itemIndex), newItem, ...items.slice(itemIndex + 1)]); // Update items list
+      setCart([...cart, newItem]); // Add item to cart
+    }
+};
+
   const deleteCartItem = (index) => {
     let newCart = cart.filter((item, i) => index != i);
     setCart(newCart);
