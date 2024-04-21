@@ -412,9 +412,9 @@ const Products = (props) => {
       <Row>
         <form
           onSubmit={(event) => {
-            event.preventDefault(); // Prevent default form submission behavior
             restockProducts(`http://localhost:1337/api/products/${query}`);
             console.log(`Restock called on ${query}`);
+            event.preventDefault(); // Prevent default form submission behavior
           }}
         >
           <input
